@@ -2,6 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
+import type { BookingResult } from "@/lib/booking";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -64,11 +65,70 @@ export default function Chat() {
                           <span key={`${message.id}-${i}`}>{part.text}</span>
                         );
                       case "tool-getOpeningHours":
+                        if (part.state === "output-available") return null;
                         return (
-                          <pre key={`${message.id}-${i}`}>
-                            {JSON.stringify(part, null, 2)}
-                          </pre>
+                          <p
+                            key={`${message.id}-${i}`}
+                            className="my-2 text-xs text-muted"
+                          >
+                            Checking opening hours...
+                          </p>
                         );
+                      case "tool-createBooking": {
+                        const key = `${message.id}-${i}`;
+
+                        if (part.state === "output-error") {
+                          return (
+                            <p key={key} className="my-2 text-xs text-red-600">
+                              Booking error: {part.errorText}
+                            </p>
+                          );
+                        }
+
+                        if (part.state !== "output-available") {
+                          return (
+                            <p key={key} className="my-2 text-xs text-muted">
+                              Checking the booking...
+                            </p>
+                          );
+                        }
+
+                        const result = part.output as BookingResult;
+
+                        if (result.ok) {
+                          const b = result.booking;
+                          return (
+                            <div
+                              key={key}
+                              className="my-2 rounded-2xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-900"
+                            >
+                              <p className="font-semibold">
+                                Booked ✓ {result.confirmationId}
+                              </p>
+                              <p>
+                                {b.name}, {b.partySize}{" "}
+                                {b.partySize === 1 ? "guest" : "guests"},{" "}
+                                {b.date} at {b.time}
+                              </p>
+                              {b.notes && <p>Notes: {b.notes}</p>}
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <div
+                            key={key}
+                            className="my-2 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"
+                          >
+                            <p className="font-semibold">Not booked</p>
+                            <ul className="list-disc pl-4">
+                              {result.problems.map((p) => (
+                                <li key={p}>{p}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        );
+                      }
                       default:
                         return null;
                     }
