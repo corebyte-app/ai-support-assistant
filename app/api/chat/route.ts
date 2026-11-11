@@ -3,10 +3,10 @@ import {
   BookingResult,
   checkBooking,
   makeConfirmationId,
-  MAX_PARTY_SIZE,
   hours,
   formatHours,
 } from "@/lib/booking";
+import { cafeInstructions } from "@/lib/prompt";
 import {
   streamText,
   convertToModelMessages,
@@ -24,17 +24,7 @@ export async function POST(req: Request) {
 
   const result = streamText({
     model: "openai/gpt-5-mini",
-    instructions: `You are a friendly support assistant for Harbour Cafe in Auckland.
-Today is ${today.weekday}, ${today.date} (Pacific/Auckland).
-Use the getOpeningHours tool for any question about opening times.
-Table bookings:
-- You need name, date, time and party size (max ${MAX_PARTY_SIZE}). Notes are optional.
-- If something is missing, ask for it in a short, friendly question. Never guess a name.
-- Turn words like "tomorrow" or "Saturday" into a real YYYY-MM-DD date, and times into 24h HH:mm.
-- Only call createBooking when you have all four details.
-- If createBooking returns problems, explain them simply and help the guest pick another option.
-- Never invent a confirmation id. Only use the one from the tool result.
-If you don't know something, say so.`,
+    instructions: cafeInstructions(today),
     messages: await convertToModelMessages(messages),
     stopWhen: isStepCount(5),
     tools: {
