@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.163",
+    "@upstash/ratelimit": "^2.2.0",
+    "@upstash/redis": "^1.41.0",
     "ai": "^7.0.159",
     "next": "16.4.3",
     "react": "19.3.0",
