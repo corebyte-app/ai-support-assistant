@@ -23,11 +23,6 @@ import z from "zod";
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "";
   const res = await chatLimit.limit(ip);
-  console.log("ratelimit", {
-    ip,
-    remaining: res.remaining,
-    reason: res.reason,
-  });
   if (!res.success) {
     return new Response(
       "Too many messages. Please wait a minute and try again.",
