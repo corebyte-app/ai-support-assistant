@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Harbour Cafe AI Assistant
 
-## Getting Started
+An AI support chat for a small cafe website in Auckland. It answers questions, checks opening hours and makes table bookings.
 
-First, run the development server:
+**Live demo:** https://ai-support-assistant-zeta.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Chat screenshot](docs/screenshot.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Streaming chat (Vercel AI SDK, `useChat`)
+- Tool calling: `getOpeningHours`, `createBooking` (server-side checks with Zod)
+- Booking card UI in the chat
+- System prompt with guardrails (stays on topic, never invents bookings)
+- Rate limit with Upstash Redis (10 messages/min per IP), input and output size limits
+- 10 test questions in docs/test-questions.md
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tech
 
-## Learn More
+Next.js (App Router) · TypeScript · Tailwind CSS · Vercel AI SDK · Vercel AI Gateway · Upstash Redis · Vercel
 
-To learn more about Next.js, take a look at the following resources:
+## Run locally
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    pnpm install
+    cp .env.example .env.local   # then add your keys
+    pnpm dev
