@@ -4,7 +4,7 @@ create table documents (
   id bigint generated always as identity primary key,
   source text not null,            -- which file the chunk came from
   content text not null,           -- the chunk text
-  embedding extensions.vector(1024) not null, -- text-embedding-3-small = 1536 numbers
+  embedding extensions.vector(1024) not null, -- text-embedding-3-small = 1024 numbers
   created_at timestamptz not null default now()
 );
 

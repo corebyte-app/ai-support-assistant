@@ -16,7 +16,6 @@ const { embeddings, usage } = await embedMany({
   model: "voyage/voyage-4-lite", // through your AI Gateway key
   values: chunks,
 });
-console.log(embeddings[0].length);
 
 // Re-running is safe: remove the old chunks for this file first.
 await sql`delete from documents where source = ${file}`;
