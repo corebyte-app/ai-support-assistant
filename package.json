@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "node --env-file=.env.local scripts/seed.mts"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.163",
@@ -14,6 +15,7 @@
     "@upstash/redis": "^1.41.0",
     "ai": "^7.0.159",
     "next": "16.4.3",
+    "postgres": "^4.1.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "zod": "^4.6.7"
