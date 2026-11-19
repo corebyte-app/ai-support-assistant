@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { BookingResult } from "@/lib/booking";
-import { KnowledgeResult } from "@/lib/knowledge";
+import type { KnowledgeResult } from "@/lib/knowledge";
 
 export default function Chat() {
   const [input, setInput] = useState("");
