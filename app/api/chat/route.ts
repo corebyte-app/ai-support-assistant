@@ -6,7 +6,7 @@ import {
   hours,
   formatHours,
 } from "@/lib/booking";
-import { searchKnowledge } from "@/lib/knowledge";
+import { KnowledgeResult, searchKnowledge } from "@/lib/knowledge";
 import { cafeInstructions } from "@/lib/prompt";
 import { chatLimit } from "@/lib/ratelimit";
 import {
@@ -72,10 +72,16 @@ export async function POST(req: Request) {
         inputSchema: z.object({
           query: z.string().describe("The guest's question in short words"),
         }),
-        execute: async ({ query }) => {
+        execute: async ({ query }): Promise<KnowledgeResult> => {
           const results = await searchKnowledge(query);
           return results.length
-            ? { found: true, results: results.map((r) => r.content) }
+            ? {
+                found: true,
+                results: results.map(({ title, content }) => ({
+                  title,
+                  content,
+                })),
+              }
             : { found: false };
         },
       }),

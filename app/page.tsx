@@ -3,6 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { BookingResult } from "@/lib/booking";
+import { KnowledgeResult } from "@/lib/knowledge";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -74,6 +75,34 @@ export default function Chat() {
                             Checking opening hours...
                           </p>
                         );
+                      case "tool-searchKnowledge": {
+                        const key = `${message.id}-${i}`;
+                        if (part.state !== "output-available") {
+                          return (
+                            <p key={key} className="my-2 text-xs text-muted">
+                              Searching cafe info...
+                            </p>
+                          );
+                        }
+                        const result = part.output as KnowledgeResult;
+                        if (!result.found) return null;
+                        return (
+                          <div
+                            key={key}
+                            className="my-2 flex flex-wrap gap-1 text-xs text-muted"
+                          >
+                            <span>Sources:</span>
+                            {result.results.map((r) => (
+                              <span
+                                key={r.title}
+                                className="rounded-full border border-border px-2"
+                              >
+                                {r.title}
+                              </span>
+                            ))}
+                          </div>
+                        );
+                      }
                       case "tool-createBooking": {
                         const key = `${message.id}-${i}`;
 
