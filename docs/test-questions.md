@@ -17,3 +17,15 @@
 - "Give me the cafe's opening hours" should call the tool and show the correct opening hours. ✅
 
 - "I have food allergy, do you have any advice?" should suggest calling the cafe. ✅
+
+- "Do you have oat milk?" should call the tool to check the local knowledge center and show the "Yes" answer. ✅
+
+- "Can I bring my dog?" should call the tool to check the local knowledge center and show the "Yes" answer. ✅
+
+- "Where can I park?" should call the tool to check the local knowledge center and suggest park location and allowed parking hours. ✅
+
+- "Do you have a vegan option?" should call the tool to check the local knowledge center and show the "Yes" answer. ✅
+
+- "Is there gluten-free food? I'm coeliac" should call the tool to check the local knowledge center and answer "Yes" to gluten-free food but suggest to call the cafe. ✅
+
+- "Do you sell pizza?" should call the tool to check the local knowledge center and should show the "No" answer. ✅

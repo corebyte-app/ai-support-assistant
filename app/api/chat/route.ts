@@ -6,6 +6,7 @@ import {
   hours,
   formatHours,
 } from "@/lib/booking";
+import { searchKnowledge } from "@/lib/knowledge";
 import { cafeInstructions } from "@/lib/prompt";
 import { chatLimit } from "@/lib/ratelimit";
 import {
@@ -63,6 +64,19 @@ export async function POST(req: Request) {
             day,
             hours: key in hours ? formatHours(hours[key]) : "Unknown day",
           };
+        },
+      }),
+      searchKnowledge: tool({
+        description:
+          "Search Harbour Cafe's info: menu, drinks, dietary options, kids, dogs, parking, payment, Wi-Fi, groups.",
+        inputSchema: z.object({
+          query: z.string().describe("The guest's question in short words"),
+        }),
+        execute: async ({ query }) => {
+          const results = await searchKnowledge(query);
+          return results.length
+            ? { found: true, results: results.map((r) => r.content) }
+            : { found: false };
         },
       }),
       createBooking: tool({
