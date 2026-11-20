@@ -6,8 +6,8 @@ import {
   hours,
   formatHours,
 } from "@/lib/booking";
-import { HandoffResult, saveHandoff } from "@/lib/handoff";
-import { KnowledgeResult, searchKnowledge } from "@/lib/knowledge";
+import { type HandoffResult, saveHandoff } from "@/lib/handoff";
+import { type KnowledgeResult, searchKnowledge } from "@/lib/knowledge";
 import { cafeInstructions } from "@/lib/prompt";
 import { chatLimit } from "@/lib/ratelimit";
 import {
