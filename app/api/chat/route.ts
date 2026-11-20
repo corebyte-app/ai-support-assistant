@@ -86,7 +86,7 @@ export async function POST(req: Request) {
             : { found: false };
         },
       }),
-      saveHandoff: tool({
+      requestHandoff: tool({
         description:
           "Pass the guest's question to Harbour Cafe staff, who will contact them. Only call after the guest agrees and gives name and contact.",
         inputSchema: z.object({

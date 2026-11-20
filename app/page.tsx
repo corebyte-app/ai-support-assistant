@@ -104,7 +104,7 @@ export default function Chat() {
                           </div>
                         );
                       }
-                      case "tool-saveHandoff": {
+                      case "tool-requestHandoff": {
                         const key = `${message.id}-${i}`;
                         if (part.state !== "output-available") {
                           return (
