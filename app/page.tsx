@@ -4,6 +4,7 @@ import { useChat } from "@ai-sdk/react";
 import { useEffect, useRef, useState } from "react";
 import type { BookingResult } from "@/lib/booking";
 import type { KnowledgeResult } from "@/lib/knowledge";
+import type { HandoffResult } from "@/lib/handoff";
 
 export default function Chat() {
   const [input, setInput] = useState("");
@@ -102,6 +103,40 @@ export default function Chat() {
                             ))}
                           </div>
                         );
+                      }
+                      case "tool-saveHandoff": {
+                        const key = `${message.id}-${i}`;
+                        if (part.state !== "output-available") {
+                          return (
+                            <p key={key} className="my-2 text-xs text-muted">
+                              Sending to the team...
+                            </p>
+                          );
+                        }
+                        const result = part.output as HandoffResult;
+                        if (result.ok) {
+                          return (
+                            <div
+                              key={key}
+                              className="my-2 rounded-2xl border border-blue-200 bg-blue-50 p-3 text-xs text-blue-900"
+                            >
+                              <p className="font-semibold">
+                                Sent to the team ✓ {result.ticketId}
+                              </p>
+                            </div>
+                          );
+                        } else {
+                          return (
+                            <div
+                              key={key}
+                              className="my-2 rounded-2xl border border-red-200 bg-red-50 p-3 text-xs text-red-900"
+                            >
+                              <p className="font-semibold">
+                                Not sent: {result.problem}
+                              </p>
+                            </div>
+                          );
+                        }
                       }
                       case "tool-createBooking": {
                         const key = `${message.id}-${i}`;

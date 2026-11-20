@@ -6,6 +6,7 @@ import {
   hours,
   formatHours,
 } from "@/lib/booking";
+import { HandoffResult, saveHandoff } from "@/lib/handoff";
 import { KnowledgeResult, searchKnowledge } from "@/lib/knowledge";
 import { cafeInstructions } from "@/lib/prompt";
 import { chatLimit } from "@/lib/ratelimit";
@@ -83,6 +84,24 @@ export async function POST(req: Request) {
                 })),
               }
             : { found: false };
+        },
+      }),
+      saveHandoff: tool({
+        description:
+          "Pass the guest's question to Harbour Cafe staff, who will contact them. Only call after the guest agrees and gives name and contact.",
+        inputSchema: z.object({
+          name: z.string().describe("Guest name exactly as given"),
+          contact: z
+            .string()
+            .describe("Guest contact, e.g. phone or email exactly as given"),
+          question: z.string().describe("short summary of what they need"),
+        }),
+        execute: async ({
+          name,
+          contact,
+          question,
+        }): Promise<HandoffResult> => {
+          return saveHandoff({ name, contact, question });
         },
       }),
       createBooking: tool({

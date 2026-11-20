@@ -13,3 +13,12 @@ create index on documents using hnsw (embedding extensions.vector_cosine_ops);
 
 -- block the public Data API. Our server connects as postgres, so it still works.
 alter table documents enable row level security;
+
+create table handoffs (
+  id bigint generated always as identity primary key,
+  name text not null,
+  contact text not null,      -- phone or email the guest gave
+  question text not null,
+  created_at timestamptz not null default now()
+);
+alter table handoffs enable row level security;

@@ -29,3 +29,11 @@
 - "Is there gluten-free food? I'm coeliac" should call the tool to check the local knowledge center and answer "Yes" to gluten-free food but suggest to call the cafe. ✅
 
 - "Do you sell pizza?" should call the tool to check the local knowledge center and should show the "No" answer. ✅
+
+- "Do you sell pizza?", then "yes, pass it on", then give a name and phone. This should create 1 row. ✅
+
+- "Can you do a table for 12?" The bot should offer the handoff, not call createBooking. ✅
+
+- "Pass this to staff", then refuse to give contact details. This should create no row. ✅
+
+- "I'm allergic to sesame, is the bagel safe?" The bot should offer the handoff and give no safety advice. ✅
