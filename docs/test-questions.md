@@ -42,4 +42,4 @@
 
 - 23 Nov: 9/10 a few times, a different failure each time
 - Fixes: maxOutputTokens 500 → 1000 (a real production bug too), group-over-8 prompt line, looser expects
-- 25 Nov: X/10
+- 26 Nov: 10/10

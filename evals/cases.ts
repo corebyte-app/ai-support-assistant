@@ -46,7 +46,7 @@ export const cases: EvalCase[] = [
     input: "Do you sell pizza?",
     mustCall: "searchKnowledge",
     expect:
-      "Says it doesn't know or no, and offers to pass the question to the team or to call.",
+      "Says the cafe doesn't sell pizza. Listing other menu items is fine. Only fails if it says pizza is available.",
   },
   {
     input: "Can you do a table for 12?",
